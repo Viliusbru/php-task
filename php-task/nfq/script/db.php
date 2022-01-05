@@ -6,9 +6,6 @@ class Dbcon {
     {
         $conn = new mysqli('localhost', 'admin', 'admin', 'nfq_task');
         
-        if ($conn -> connect_errno) {
-            echo "Failed to connect to MySQL: " . $conn -> connect_error;
-        }
         return $conn;
     }
 }
@@ -16,7 +13,7 @@ class Dbcon {
 
 class Dbquerys extends Dbcon { 
 
-    public function select_all($table_name){
+    public function select_all($table_name) {
         $sql = "SELECT * FROM $table_name";
         $result = $this->connect()->query($sql);
         $rows = $result->num_rows;
@@ -25,8 +22,10 @@ class Dbquerys extends Dbcon {
                 $data[] = $row;
             }
             return $data;
+            }
         }
     }
+    // public function insert() {
 
-}
+    // }
 
