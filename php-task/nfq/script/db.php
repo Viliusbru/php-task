@@ -1,15 +1,32 @@
 <?php
 
-class Mysql {
-    private $host = "localhost";
-    private $user = "admin";
-    private $pwd = "admin";
-    private $dbName = "nfq_task";
+class Dbcon {
 
-    protected function connect(){
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbName;
-        $pdo = new PDO($dsn, $this->user, $this->pwd);
-        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        return $pdo;
+    public function connect()
+    {
+        $conn = new mysqli('localhost', 'admin', 'admin', 'nfq_task');
+        
+        if ($conn -> connect_errno) {
+            echo "Failed to connect to MySQL: " . $conn -> connect_error;
+        }
+        return $conn;
     }
 }
+
+
+class Dbquerys extends Dbcon { 
+
+    public function select_all($table_name){
+        $sql = "SELECT * FROM $table_name";
+        $result = $this->connect()->query($sql);
+        $rows = $result->num_rows;
+        if($rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $data[] = $row;
+            }
+            return $data;
+        }
+    }
+
+}
+
