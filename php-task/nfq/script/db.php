@@ -23,9 +23,19 @@ class Dbquerys extends Dbcon {
             }
             return $data;
             }
-        }
     }
-    // public function insert() {
 
-    // }
+
+    public function create_project($name, $groups, $students) {
+        $group_sql = "INSERT INTO groups(student_number) VALUES (?)";
+        $group_stmt = $this->connect()->prepare($group_sql);
+        $group_stmt->execute([$students]);
+        $group_sql = "INSERT INTO projects(project_name, number_of_groups) VALUES (?, ?)";
+        $group_stmt = $this->connect()->prepare($group_sql);
+        $group_stmt->execute([$name, $groups]);
+    }
+}
+
+
+
 
