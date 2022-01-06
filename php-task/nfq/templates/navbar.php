@@ -13,7 +13,9 @@
         <li class="nav-item active">
           <a class="nav-link" href="student_create.php">Add a student</a>
         </li>
-
+        <li class="nav-item active">
+          <a class="nav-link" href="manage_projects.php">Manage projects</a>
+        </li>
       </ul>
     </div>
   </nav>

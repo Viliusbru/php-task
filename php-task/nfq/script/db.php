@@ -28,6 +28,14 @@ class Dbquerys extends Dbcon {
         return $id['id'];
     }
 
+    public function find_project_data($id) {
+        $sql = "SELECT * FROM projects WHERE id = ?";
+        $result = $this->connect()->prepare($sql);
+        $result->execute([$id]);
+        $id = $result->fetch(PDO::FETCH_ASSOC);
+        return $id;
+    }
+
     public function create_project($name, $groups) {
         $project_sql = "INSERT INTO projects(project_name, number_of_groups) VALUES (?, ?)";
         $project_stmt = $this->connect()->prepare($project_sql);

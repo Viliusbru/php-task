@@ -25,21 +25,6 @@
         }
         header('Location: index.php');
     }
-
-
-
-
-        // $sql = "INSERT INTO projects(project_name, number_of_groups) VALUES('$name', '$group_number')";
-        // for($i=0; $i <= $group_number; $i++){
-        //     $sql2 = "INSERT INTO groups(student_number) VALUES ('$students')";
-        // }
-    
-        // if((mysqli_query($conn, $sql)) && (mysqli_query($conn, $sql2))) {
-        //     header('Location: index.php');
-        // } else {
-        //     echo 'query error: ' . mysqli_error($conn);
-        // }
-
 ?>
 <form style="width:20%;padding:10px;margin:10px;" class="border rounded" method="POST">
 <div class="form-group">
