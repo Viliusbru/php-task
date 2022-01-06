@@ -14,21 +14,31 @@
 <?php include 'script/db.php'; ?> 
 <?php 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $name = mysqli_real_escape_string($conn, $_POST['project-title']);
-        $group_number = mysqli_real_escape_string($conn, $_POST['group-number']);
-        $students = mysqli_real_escape_string($conn, $_POST['student-number']);
-    
-        $sql = "INSERT INTO projects(project_name, number_of_groups) VALUES('$name', '$group_number')";
-        for($i=0; $i <= $group_number; $i++){
-            $sql2 = "INSERT INTO groups(student_number) VALUES ('$students')";
+        $name = $_POST['project-title'];
+        $group_number = $_POST['group-number'];
+        $students = $_POST['student-number'];
+
+        $submit = new Dbquerys();
+        $submit->create_project($name, $group_number, $students);
+        for($i = 0; $i <= $group_number; $i++) {
+            $submit->create_group($name, $students);
         }
+        header('Location: index.php');
+    }
+
+
+
+
+        // $sql = "INSERT INTO projects(project_name, number_of_groups) VALUES('$name', '$group_number')";
+        // for($i=0; $i <= $group_number; $i++){
+        //     $sql2 = "INSERT INTO groups(student_number) VALUES ('$students')";
+        // }
     
-        if((mysqli_query($conn, $sql)) && (mysqli_query($conn, $sql2))) {
-            header('Location: index.php');
-        } else {
-            echo 'query error: ' . mysqli_error($conn);
-        }
-      }
+        // if((mysqli_query($conn, $sql)) && (mysqli_query($conn, $sql2))) {
+        //     header('Location: index.php');
+        // } else {
+        //     echo 'query error: ' . mysqli_error($conn);
+        // }
 
 ?>
 <form style="width:20%;padding:10px;margin:10px;" class="border rounded" method="POST">

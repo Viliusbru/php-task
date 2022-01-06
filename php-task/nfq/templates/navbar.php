@@ -10,6 +10,9 @@
         <li class="nav-item active">
           <a class="nav-link" href="project_create.php">Create a project</a>
         </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="student_create.php">Add a student</a>
+        </li>
 
       </ul>
     </div>
