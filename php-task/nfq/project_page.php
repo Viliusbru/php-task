@@ -24,12 +24,17 @@
         $student_list[] = $student;
       }
     }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+
+    
+    }
 
 } else {
     header('Location: index.php');
 }
 ?>
-<form>
+<form method="POST">
 <div class="d-flex justify-content-center">
   <div class="card" style="width: 18rem;">
     <div class="card-body card-header text-center">
@@ -38,7 +43,7 @@
       <h6 class="card-subtitle mb-2">Students per group: <?php  echo '<b>' . count($group_data) . '</b>'; ?></h6>
       <h3>Groups</h3>
       <div class="card superCenter pt-2">
-        <?php foreach($project_data as $card): ?>
+        <?php for($g = 1; $g <= $project_data['number_of_groups']; $g++): ?>
           <div class="card-body d-flex flex-column gap-3">
             <p><div class="mb-2 ml-1 font-weight-bold"> Group
               <?php echo '#' . $counter; $counter++; ?></p>
@@ -46,7 +51,7 @@
             <?php foreach($group_data as $group):?>
               <div class="card">
                 <select class="custom-select">
-                  <option value="none" selected>Select a student</option>
+                  <option value="" selected>Select a student</option>
                   <?php foreach($student_list as $name):?>
                     <option value=<?=$name['id'] ?>><?=$name['full_name']?></option>
                     <?php endforeach; ?>
@@ -54,7 +59,7 @@
                 </div>
                 <?php endforeach; ?>
               </div>
-              <?php endforeach; ?>
+              <?php endfor; ?>
             </div>
           </div>
           <div class="card-footer">

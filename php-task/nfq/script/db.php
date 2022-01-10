@@ -40,7 +40,7 @@ class Dbquerys extends Dbcon {
         $sql = "SELECT * FROM groups WHERE project_pk = ?";
         $result = $this->connect()->prepare($sql);
         $result->execute([$id]);
-        $data = $result->fetchAll(PDO::FETCH_ASSOC);
+        $data = $result->fetch(PDO::FETCH_ASSOC);
 
         return $data;
     }
@@ -63,7 +63,4 @@ class Dbquerys extends Dbcon {
         $stmt->execute([$name]);
     }
 }   
-
-
-
 
