@@ -20,11 +20,10 @@
 <div class="container">
     <div class="row">
         <?php foreach($projects as $project): ?>
-            <div class="card col-sm-4" style="width: 18rem;">
+            <div class="card col-sm-3 p-3 m-1" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $project['project_name'] ?></h5>
                     <p class="card-text">Number of groups: <?php echo $project['number_of_groups'] ?></p>
-                    <p class="card-text">Number of groups: <?php echo $project['id'] ?></p>
                     <a href="project_page.php?id=<?php echo $project['id']?>" class="btn btn-primary">Edit project</a>
                 </div>
             </div>  

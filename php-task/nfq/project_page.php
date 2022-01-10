@@ -14,12 +14,52 @@
 <?php include 'script/db.php'; ?> 
 <?php if (isset($_GET['id'])){
 
-    
     $project = new Dbquerys();
-    echo $project['project_name'];
+    $counter = 1;
+    $project_data = $project->find_project_data_from_id($_GET['id']);
+    $group_data = $project->find_students_per_group($_GET['id']);
+    $students = $project->select_all('students');
+    foreach($students as $student) {
+      if ($student['group_fk'] == NULL) {
+        $student_list[] = $student;
+      }
+    }
+
 } else {
     header('Location: index.php');
 }
 ?>
-    
+<form>
+<div class="d-flex justify-content-center">
+  <div class="card" style="width: 18rem;">
+    <div class="card-body card-header text-center">
+      <h5 class="card-title ">Project: <?php echo '<b>' .  $project_data['project_name'] . '</b>' ?></h5>
+      <h6 class="card-subtitle mb-2">Number of Groups: <?php  echo '<b>' . $project_data['number_of_groups'] . '</b>'; ?></h6>
+      <h6 class="card-subtitle mb-2">Students per group: <?php  echo '<b>' . count($group_data) . '</b>'; ?></h6>
+      <h3>Groups</h3>
+      <div class="card superCenter pt-2">
+        <?php foreach($project_data as $card): ?>
+          <div class="card-body d-flex flex-column gap-3">
+            <p><div class="mb-2 ml-1 font-weight-bold"> Group
+              <?php echo '#' . $counter; $counter++; ?></p>
+            </div>
+            <?php foreach($group_data as $group):?>
+              <div class="card">
+                <select class="custom-select">
+                  <option value="none" selected>Select a student</option>
+                  <?php foreach($student_list as $name):?>
+                    <option value=<?=$name['id'] ?>><?=$name['full_name']?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+                <?php endforeach; ?>
+              </div>
+              <?php endforeach; ?>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-primary w-100">Submit</button>
+        </div>
+      </div>
+        </form>
 

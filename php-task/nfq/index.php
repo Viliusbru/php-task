@@ -24,7 +24,7 @@
         foreach($students->select_all('students') as $student): ?>
         <div class="card">
             <div class="card-body">
-                <?php echo htmlspecialchars($student['full_name']);?>
+                <?php echo $student['full_name'];?>
             </div>
         </div>
         <?php endforeach; ?>

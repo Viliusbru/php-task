@@ -20,7 +20,7 @@
 
         $submit = new Dbquerys();
         $submit->create_project($name, $group_number, $students);
-        for($i = 0; $i <= $group_number; $i++) {
+        for($i = 1; $i <= $group_number; $i++) {
             $submit->create_group($name, $students);
         }
         header('Location: index.php');
