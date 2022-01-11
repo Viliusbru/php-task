@@ -14,52 +14,66 @@
 <?php include 'script/db.php'; ?> 
 <?php if (isset($_GET['id'])){
 
+
     $project = new Dbquerys();
     $counter = 1;
-    $project_data = $project->find_project_data_from_id($_GET['id']);
-    $group_data = $project->find_students_per_group($_GET['id']);
+    $project_data = $project->get_project_data_from_id($_GET['id']);
+    $group_data = $project->get_students_per_group();
+    foreach($group_data as $student) {
+      if(!empty($student)) {
+          $data[$student['group_id']][] = $student['name'];
+      }
+  }
+
+    var_dump($data);
+
     $students = $project->select_all('students');
     foreach($students as $student) {
       if ($student['group_fk'] == NULL) {
         $student_list[] = $student;
       }
     }
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  }
+//     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
-
     
-    }
+//     }
 
-} else {
-    header('Location: index.php');
-}
+// } else {
+//     header('Location: index.php');
+// }
+
 ?>
 <form method="POST">
 <div class="d-flex justify-content-center">
   <div class="card" style="width: 18rem;">
     <div class="card-body card-header text-center">
       <h5 class="card-title ">Project: <?php echo '<b>' .  $project_data['project_name'] . '</b>' ?></h5>
-      <h6 class="card-subtitle mb-2">Number of Groups: <?php  echo '<b>' . $project_data['number_of_groups'] . '</b>'; ?></h6>
-      <h6 class="card-subtitle mb-2">Students per group: <?php  echo '<b>' . count($group_data) . '</b>'; ?></h6>
+      <h6 class="card-subtitle mb-2">Number of Groups: <?='<b>' . $project_data['number_of_groups'] . '</b>'; ?></h6>
+      <h6 class="card-subtitle mb-2">Students per group: <?='<b>' . $group_data[0]['student_number'] . '</b>'; ?></h6>
       <h3>Groups</h3>
       <div class="card superCenter pt-2">
         <?php for($g = 1; $g <= $project_data['number_of_groups']; $g++): ?>
           <div class="card-body d-flex flex-column gap-3">
             <p><div class="mb-2 ml-1 font-weight-bold"> Group
-              <?php echo '#' . $counter; $counter++; ?></p>
+              <?= '#' . $g; ?></p>
             </div>
-            <?php foreach($group_data as $group):?>
+            <?php foreach($group_data as $select):?>
               <div class="card">
-                <select class="custom-select">
-                  <option value="" selected>Select a student</option>
+                <select name="group_<?=$g?>_students[]" id="<?=$select['id']?>" class="custom-select">
                   <?php foreach($student_list as $name):?>
-                    <option value=<?=$name['id'] ?>><?=$name['full_name']?></option>
+                      <?php if ($select['student_id']): ?> 
+                        <option value=<?=$name['id'] ?> selected><?=$name['full_name'] ?></option>
+                      <?php else: ?>
+                        <option value="" selected>Select a student</option>
+                        <option value=<?=$name['id'] ?>><?=$name['full_name']?></option>
+                      <?php endif; ?>
                     <?php endforeach; ?>
                   </select>
                 </div>
                 <?php endforeach; ?>
+                <?php endfor; ?>
               </div>
-              <?php endfor; ?>
             </div>
           </div>
           <div class="card-footer">
