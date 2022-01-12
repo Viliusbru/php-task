@@ -37,11 +37,20 @@ class Dbquerys extends Dbcon {
 
         return $data;
     }
-    
-    public function get_students_per_group() {
-        $sql = 'SELECT * FROM groups LEFT JOIN students ON groups.id = students.id';
+
+    public function get_group_data($id) {
+        $sql = "SELECT * FROM groups WHERE project_pk = ?";
         $result = $this->connect()->prepare($sql);
-        $result->execute([]);
+        $result->execute([$id]);
+        $data = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        return $data;
+    }
+    
+    public function get_groups_left_join_students($id) {
+        $sql = 'SELECT * FROM groups LEFT JOIN students ON groups.id = students.group_fk WHERE groups.project_pk = ?';
+        $result = $this->connect()->prepare($sql);
+        $result->execute([$id]);
         $data = $result->fetchAll(PDO::FETCH_ASSOC);
         return $data;
 

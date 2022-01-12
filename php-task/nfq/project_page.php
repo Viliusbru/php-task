@@ -14,19 +14,17 @@
 <?php include 'script/db.php'; ?> 
 <?php if (isset($_GET['id'])){
 
-
     $project = new Dbquerys();
-    $counter = 1;
     $project_data = $project->get_project_data_from_id($_GET['id']);
-    $group_data = $project->get_students_per_group();
-    foreach($group_data as $student) {
-      if(!empty($student)) {
-          $data[$student['group_id']][] = $student['name'];
-      }
-  }
-
-    var_dump($data);
-
+    $left_join = $project->get_groups_left_join_students($_GET['id']);
+    $group_data = $project->get_group_data($_GET['id']);
+    foreach($group_data as $group){
+      $groups[] = $group; 
+    }
+      echo "<pre>";
+      print_r($groups);
+      echo "</pre>";
+    
     $students = $project->select_all('students');
     foreach($students as $student) {
       if ($student['group_fk'] == NULL) {
@@ -34,51 +32,35 @@
       }
     }
   }
-//     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-    
-//     }
-
-// } else {
-//     header('Location: index.php');
-// }
 
 ?>
-<form method="POST">
 <div class="d-flex justify-content-center">
-  <div class="card" style="width: 18rem;">
+<div class="card" style="width: 18rem;">
     <div class="card-body card-header text-center">
-      <h5 class="card-title ">Project: <?php echo '<b>' .  $project_data['project_name'] . '</b>' ?></h5>
-      <h6 class="card-subtitle mb-2">Number of Groups: <?='<b>' . $project_data['number_of_groups'] . '</b>'; ?></h6>
-      <h6 class="card-subtitle mb-2">Students per group: <?='<b>' . $group_data[0]['student_number'] . '</b>'; ?></h6>
-      <h3>Groups</h3>
-      <div class="card superCenter pt-2">
-        <?php for($g = 1; $g <= $project_data['number_of_groups']; $g++): ?>
-          <div class="card-body d-flex flex-column gap-3">
-            <p><div class="mb-2 ml-1 font-weight-bold"> Group
-              <?= '#' . $g; ?></p>
-            </div>
-            <?php foreach($group_data as $select):?>
-              <div class="card">
-                <select name="group_<?=$g?>_students[]" id="<?=$select['id']?>" class="custom-select">
-                  <?php foreach($student_list as $name):?>
-                      <?php if ($select['student_id']): ?> 
-                        <option value=<?=$name['id'] ?> selected><?=$name['full_name'] ?></option>
-                      <?php else: ?>
-                        <option value="" selected>Select a student</option>
-                        <option value=<?=$name['id'] ?>><?=$name['full_name']?></option>
-                      <?php endif; ?>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <?php endforeach; ?>
-                <?php endfor; ?>
-              </div>
-            </div>
-          </div>
-          <div class="card-footer">
+    <form class="card students">
+        <div class="card-header text-center"> 
+            <h3>Groups</h3>
+        </div>
+        <div class="card-body d-flex flex-column gap-3">
+            <?php for($g = 1; $g <= $project_data['number_of_groups']; $g++){ ?>
+                <fieldset class="d-flex flex-column gap-1">
+                    <legend class="mb-2 ml-1">Group #<?=$g?></legend>
+                     <?php for($s = 0; $s < $left_join[$g]['student_number']; $s++){ ?>
+                        <select id="<?=$groups[$s]['id']?>" class="form-control" name="group_<?=$g?>_students[]">
+                            <option disabled selected>Select a student</option>
+                            <?php foreach($student_list as $student){ ?>
+                                <option value="<?=$student['id'] ?>"><?=$student['full_name']?></option>
+                            <?php } ?>
+                        </select>
+                    <?php } ?>
+                </fieldset>
+            <?php } ?>
+        </div>
+        <div class="card-footer">
             <button class="btn btn-primary w-100">Submit</button>
         </div>
-      </div>
+                            </div>
+                            </div>
+                            </div>
         </form>
 
