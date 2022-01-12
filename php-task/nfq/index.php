@@ -17,14 +17,17 @@
 
     <!-- navbar -->
     <?php include('templates/navbar.php'); ?> 
-    <div class="container">
+    <div class="container justify-content-center">
         
         <?php 
         $students = new Dbquerys();
         foreach($students->select_all('students') as $student): ?>
-        <div class="card">
-            <div class="card-body">
+        <div class="card d-flex flex-column gap-3">
+            <div class="card-body d-flex flex-column gap-1">
                 <?php echo $student['full_name'];?>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="script/delete_project.php?id=<?php echo $student['id']?>" class="btn-sm btn btn-outline-danger">Delete</a>
+                </div>
             </div>
         </div>
         <?php endforeach; ?>

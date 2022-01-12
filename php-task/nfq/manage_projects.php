@@ -14,25 +14,21 @@
 <?php include 'script/db.php'; ?> 
 <?php
     $projects = new Dbquerys();
-    $projectss = $projects->select_all("projects");
-    if(isset($_POST['delete'])) {
-        $projects->delete_project($project['id']);
-    }
+    $projects = $projects->select_all("projects");
+
 
 ?>
-<form method="POST">
     <div class="container">
         <div class="row">
-            <?php foreach($projectss as $project): ?>
+            <?php foreach($projects as $project): ?>
                 <div class="card col-sm-3 p-3 m-1" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $project['project_name'] ?></h5>
                         <p class="card-text">Number of groups: <?php echo $project['number_of_groups'] ?></p>
                         <a href="project_page.php?id=<?php echo $project['id']?>" class="btn btn-primary">Edit project</a><p></p>
-                        <button type="submit" name="delete" class="btn btn-danger btn-primary">Delete button</button>
+                        <a href="script/delete_project.php?id=<?php echo $project['id']?>" class="btn btn-danger btn-primary">Delete project</a><p></p>
                     </div>
                 </div>  
                 <?php endforeach; ?>
             </div>
         </div>
-    </form>
