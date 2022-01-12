@@ -15,17 +15,15 @@
 <?php
     $projects = new Dbquerys();
     $projectss = $projects->select_all("projects");
-
+    if(isset($_POST['delete'])) {
+        $projects->delete_project($project['id']);
+    }
 
 ?>
 <form method="POST">
     <div class="container">
         <div class="row">
-            <?php foreach($projectss as $project): 
-                if(isset($_POST['delete'])) {
-                    $projects->delete_project($project['id']);
-                }
-                    ?>
+            <?php foreach($projectss as $project): ?>
                 <div class="card col-sm-3 p-3 m-1" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $project['project_name'] ?></h5>
