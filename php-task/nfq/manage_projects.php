@@ -14,19 +14,27 @@
 <?php include 'script/db.php'; ?> 
 <?php
     $projects = new Dbquerys();
-    $projects = $projects->select_all("projects");
+    $projectss = $projects->select_all("projects");
+
 
 ?>
-<div class="container">
-    <div class="row">
-        <?php foreach($projects as $project): ?>
-            <div class="card col-sm-3 p-3 m-1" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title"><?php echo $project['project_name'] ?></h5>
-                    <p class="card-text">Number of groups: <?php echo $project['number_of_groups'] ?></p>
-                    <a href="project_page.php?id=<?php echo $project['id']?>" class="btn btn-primary">Edit project</a>
-                </div>
-            </div>  
-        <?php endforeach; ?>
-    </div>
-</div>
+<form method="POST">
+    <div class="container">
+        <div class="row">
+            <?php foreach($projectss as $project): 
+                if(isset($_POST['delete'])) {
+                    $projects->delete_project($project['id']);
+                }
+                    ?>
+                <div class="card col-sm-3 p-3 m-1" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $project['project_name'] ?></h5>
+                        <p class="card-text">Number of groups: <?php echo $project['number_of_groups'] ?></p>
+                        <a href="project_page.php?id=<?php echo $project['id']?>" class="btn btn-primary">Edit project</a><p></p>
+                        <button type="submit" name="delete" class="btn btn-danger btn-primary">Delete button</button>
+                    </div>
+                </div>  
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </form>

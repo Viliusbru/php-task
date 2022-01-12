@@ -75,5 +75,14 @@ class Dbquerys extends Dbcon {
         $stmt = $this->connect()->prepare($sql);
         $stmt->execute([$name]);
     }
-}   
-
+    
+    // DELETEs
+    
+    public function delete_project($id) {
+        $sql = "DELETE FROM projects WHERE id = ?";
+        $stmt = $this->connect()->prepare($sql);
+        $stmt->execute([$id]);   
+} 
+} 
+        
+        
