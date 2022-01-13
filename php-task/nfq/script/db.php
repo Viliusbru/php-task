@@ -13,7 +13,7 @@ class Dbcon {
 
 class Dbquerys extends Dbcon { 
 // GETs
-    public function select_all($table_name) {
+    public function getAllFromTable($table_name) {
         $sql = "SELECT * FROM $table_name";
         $result = $this->connect()->query($sql);
 
@@ -39,7 +39,7 @@ class Dbquerys extends Dbcon {
     }
 
     public function get_group_data($id) {
-        $sql = "SELECT * FROM groups WHERE project_pk = ?";
+        $sql = "SELECT * FROM groups WHERE project_id = ?";
         $result = $this->connect()->prepare($sql);
         $result->execute([$id]);
         $data = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -60,6 +60,26 @@ class Dbquerys extends Dbcon {
         $sql = "SELECT * FROM students LEFT JOIN groups ON groups.id = students.group_id LEFT JOIN projects ON groups.project_id = projects.id";
         $data = $this->connect()->query($sql);
 
+        return $data;
+    }
+
+    // new
+//Get list of groups belonging to a project
+    public function getGroupsByProject($project_id) {
+        $sql = 'SELECT * FROM groups INNER JOIN projects ON groups.project_id = projects.id WHERE projects.id = :project_id';
+        $result = $this->connect()->prepare($sql);
+        $result->execute([':project_id' => $project_id]);
+        $data = $result->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $data;
+    }
+    //Get list of users belonging to a group
+    public function getUsersByGroup($group_id) {
+        $sql = 'SELECT * FROM students LEFT JOIN groups ON students.group_id = groups.id WHERE groups.id = :group_id';
+        $result = $this->connect()->prepare($sql);
+        $result->execute([':group_id' => $group_id]);
+        $data = $result->fetchAll(PDO::FETCH_ASSOC);
+        
         return $data;
     }
 // CREATEs

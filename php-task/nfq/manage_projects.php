@@ -14,7 +14,7 @@
 <?php include 'script/db.php'; ?> 
 <?php
     $projects = new Dbquerys();
-    $projects = $projects->select_all("projects");
+    $projects = $projects->getAllFromTable("projects");
 
 
 ?>
