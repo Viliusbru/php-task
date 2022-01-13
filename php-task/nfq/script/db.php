@@ -52,9 +52,15 @@ class Dbquerys extends Dbcon {
         $result = $this->connect()->prepare($sql);
         $result->execute([$id]);
         $data = $result->fetchAll(PDO::FETCH_ASSOC);
+        
         return $data;
+    }
 
+    public function get_group_for_student() {
+        $sql = "SELECT * FROM students LEFT JOIN groups ON groups.id = students.group_fk LEFT JOIN projects ON groups.project_pk = projects.id";
+        $data = $this->connect()->query($sql);
 
+        return $data;
     }
 // CREATEs
 

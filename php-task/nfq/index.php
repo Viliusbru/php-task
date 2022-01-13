@@ -17,16 +17,23 @@
 
     <!-- navbar -->
     <?php include('templates/navbar.php'); ?> 
-    <div class="container justify-content-center">
+    <div style="width:20%;padding:10px;margin:10px;" class="container justify-content-center">
         
         <?php 
         $students = new Dbquerys();
-        foreach($students->select_all('students') as $student): ?>
+        $group = $students->get_group_for_student();
+        foreach($group as $student): ?>
         <div class="card d-flex flex-column gap-3">
             <div class="card-body d-flex flex-column gap-1">
-                <?php echo $student['full_name'];?>
+                <?php echo $student['full_name']; $group;?>
+                <?php if (!empty($student['project_name'])): ?>
+                <a class="bold">Project: <b><?=$student['project_name']?></b></a>
+                <?php else: ?>
+                    <a>Project: </a>
+                    <br>
+                <?php endif; ?>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a href="script/delete_project.php?id=<?php echo $student['id']?>" class="btn-sm btn btn-outline-danger">Delete</a>
+                        <a href="script/delete_project.php?id=<?php echo $student['id']?>" class="btn-sm btn btn-outline-danger">Delete student</a>
                 </div>
             </div>
         </div>

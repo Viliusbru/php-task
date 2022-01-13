@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <?php include('templates/navbar.php');
-      include 'script/db.php'; ?>
+include 'script/db.php'; ?>
 <?php if (isset($_GET['id'])) {
 
   $project = new Dbquerys();
@@ -29,13 +29,13 @@
       $student_list[] = $student;
     }
   }
-  foreach ($left_join as $row){
-    if ($row['group_fk'] != NULL){
+  foreach ($left_join as $row) {
+    if ($row['group_fk'] != NULL) {
       $asigned_students[] = $row;
     }
   }
   echo "<pre>";
-  print_r($left_join);
+  print_r($student_list);
   echo "</pre>";
   echo "<pre>";
   print_r($asigned_students);
@@ -54,25 +54,14 @@
           <?php for ($g = 1; $g <= $project_data['number_of_groups']; $g++) { ?>
             <fieldset class="d-flex flex-column gap-1">
               <legend class="mb-2 ml-1">Group #<?= $g ?></legend>
-              <?php if (!$asigned_students): ?>
-                <?php for ($s = 1; $s <= $left_join[$g]['student_number']; $s++) { ?>
-                  <select id="<?= $s ?>" class="form-control" name="group_<?= $g ?>">
-                    <option disabled selected>Select a student</option>
-                    <?php foreach ($student_list as $student) { ?>
-                      <option value="<?= $student['id'] ?>"><?= $student['full_name'] ?></option>
-                      <?php } ?>
-                    </select>
-                    <?php } ?>
-                <?php else: ?>
-                  <?php for ($s = 1; $s <= $left_join[$g]['student_number']; $s++) { ?>
-                    <select id="<?= $s ?>" class="form-control" name="group_<?= $g ?>">
-                      <option disabled selected>Select a student</option>
-                      <?php foreach ($student_list as $student) { ?>
-                        <option value="<?= $student['id'] ?>"><?= $student['full_name'] ?></option>
-                        <?php } ?>
-                      </select>
-                      <?php } ?>
-                      <?php endif; ?>
+              <?php for ($s = 1; $s <= $left_join[$g]['student_number']; $s++) { ?>
+                <select id="<?= $s ?>" class="form-control" name="group_<?= $g ?>">
+                  <option disabled selected>Select a student</option>
+                  <?php foreach ($student_list as $student) { ?>
+                    <option value="<?= $student['id'] ?>"><?= $student['full_name'] ?></option>
+                  <?php } ?>
+                </select>
+              <?php } ?>
             </fieldset>
           <?php } ?>
         </div>
