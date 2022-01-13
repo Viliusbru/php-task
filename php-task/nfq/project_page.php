@@ -18,11 +18,8 @@ include 'script/db.php'; ?>
   $project = new Dbquerys();
   $project_data = $project->get_project_data_from_id($_GET['id']);
   $left_join = $project->get_groups_left_join_students($_GET['id']);
-
   $group_data = $project->get_group_data($_GET['id']);
-  foreach ($group_data as $group) {
-    $groups[] = $group;
-  }
+
   $students = $project->select_all('students');
   foreach ($students as $student) {
     if ($student['group_fk'] == NULL) {
@@ -35,10 +32,7 @@ include 'script/db.php'; ?>
     }
   }
   echo "<pre>";
-  print_r($student_list);
-  echo "</pre>";
-  echo "<pre>";
-  print_r($asigned_students);
+  print_r($group_data);
   echo "</pre>";
 }
 
@@ -55,7 +49,7 @@ include 'script/db.php'; ?>
             <fieldset class="d-flex flex-column gap-1">
               <legend class="mb-2 ml-1">Group #<?= $g ?></legend>
               <?php for ($s = 1; $s <= $left_join[$g]['student_number']; $s++) { ?>
-                <select id="<?= $s ?>" class="form-control" name="group_<?= $g ?>">
+                <select id="<?=$groups[$s]['id'] ?>" class="form-control" name="group_<?= $g ?>">
                   <option disabled selected>Select a student</option>
                   <?php foreach ($student_list as $student) { ?>
                     <option value="<?= $student['id'] ?>"><?= $student['full_name'] ?></option>
