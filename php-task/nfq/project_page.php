@@ -19,6 +19,10 @@ include 'script/db.php'; ?>
   $project_data = $project->get_project_data_from_id($_GET['id']);
   $left_join = $project->get_groups_left_join_students($_GET['id']);
   $group_data = $project->get_group_data($_GET['id']);
+  // $groups = [
+  //   1 => [351 => "Bob", 352 => "Claire"],
+  //   2 => [353 => "Sarah", "354" => "Craig"],
+  //  ];
 
   $students = $project->select_all('students');
   foreach ($students as $student) {
@@ -34,6 +38,7 @@ include 'script/db.php'; ?>
   echo "<pre>";
   print_r($group_data);
   echo "</pre>";
+
 }
 
 ?>

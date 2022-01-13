@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2022 at 01:57 PM
+-- Generation Time: Jan 13, 2022 at 09:00 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.13
 
@@ -30,19 +30,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `groups` (
   `id` int(11) NOT NULL,
   `student_number` int(11) NOT NULL,
-  `project_pk` int(11) DEFAULT NULL,
-  `group_id` int(11) NOT NULL
+  `project_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `groups`
 --
 
-INSERT INTO `groups` (`id`, `student_number`, `project_pk`, `group_id`) VALUES
-(351, 2, 46, 1),
-(352, 2, 46, 1),
-(353, 2, 46, 2),
-(354, 2, 46, 2);
+INSERT INTO `groups` (`id`, `student_number`, `project_id`) VALUES
+(368, 2, 52),
+(369, 2, 52),
+(370, 2, 52),
+(371, 2, 52);
 
 -- --------------------------------------------------------
 
@@ -61,7 +60,7 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `project_name`, `number_of_groups`) VALUES
-(46, '2', 2);
+(52, '2', 2);
 
 -- --------------------------------------------------------
 
@@ -72,18 +71,18 @@ INSERT INTO `projects` (`id`, `project_name`, `number_of_groups`) VALUES
 CREATE TABLE `students` (
   `id` int(11) NOT NULL,
   `full_name` varchar(255) NOT NULL,
-  `group_fk` int(11) DEFAULT NULL
+  `group_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `full_name`, `group_fk`) VALUES
+INSERT INTO `students` (`id`, `full_name`, `group_id`) VALUES
 (10, 'Vardenis Pavardenis5', NULL),
 (11, 'Vardenis Pavardenis6', NULL),
 (14, 'Vardenis Pavardenis', NULL),
-(15, 'Vilius Bruzda', 351),
+(15, 'Vilius Bruzda', NULL),
 (16, 'Vardenis Pavardenis1', NULL),
 (17, 'Vardenis Pavardenis2', NULL);
 
@@ -96,7 +95,7 @@ INSERT INTO `students` (`id`, `full_name`, `group_fk`) VALUES
 --
 ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `groups_ibfk_1` (`project_pk`);
+  ADD KEY `groups_ibfk_1` (`project_id`);
 
 --
 -- Indexes for table `projects`
@@ -111,7 +110,7 @@ ALTER TABLE `projects`
 ALTER TABLE `students`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `full_name` (`full_name`),
-  ADD KEY `students_ibfk_1` (`group_fk`);
+  ADD UNIQUE KEY `group_fk` (`group_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -121,13 +120,13 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=355;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=372;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -143,13 +142,13 @@ ALTER TABLE `students`
 -- Constraints for table `groups`
 --
 ALTER TABLE `groups`
-  ADD CONSTRAINT `groups_ibfk_1` FOREIGN KEY (`project_pk`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `groups_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `students`
 --
 ALTER TABLE `students`
-  ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`group_fk`) REFERENCES `groups` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
+  ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

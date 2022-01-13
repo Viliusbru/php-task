@@ -48,7 +48,7 @@ class Dbquerys extends Dbcon {
     }
     
     public function get_groups_left_join_students($id) {
-        $sql = 'SELECT * FROM groups LEFT JOIN students ON groups.id = students.group_fk WHERE groups.project_pk = ?';
+        $sql = 'SELECT * FROM groups LEFT JOIN students ON groups.id = students.group_id WHERE groups.project_id = ?';
         $result = $this->connect()->prepare($sql);
         $result->execute([$id]);
         $data = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -57,7 +57,7 @@ class Dbquerys extends Dbcon {
     }
 
     public function get_group_for_student() {
-        $sql = "SELECT * FROM students LEFT JOIN groups ON groups.id = students.group_fk LEFT JOIN projects ON groups.project_pk = projects.id";
+        $sql = "SELECT * FROM students LEFT JOIN groups ON groups.id = students.group_id LEFT JOIN projects ON groups.project_id = projects.id";
         $data = $this->connect()->query($sql);
 
         return $data;
@@ -70,11 +70,11 @@ class Dbquerys extends Dbcon {
         $project_stmt->execute([$name, $groups]);
         
     }
-    public function create_group($name, $students, $counter){
-        $project_pk = $this->get_project_id($name);
-        $group_sql = "INSERT INTO groups(student_number, project_pk, group_id) VALUES (?, ?, ?)";
+    public function create_group($name, $students){
+        $project_id = $this->get_project_id($name);
+        $group_sql = "INSERT INTO groups(student_number, project_id) VALUES (?, ?)";
         $group_stmt = $this->connect()->prepare($group_sql);
-        $group_stmt->execute([$students, $project_pk, $counter]);
+        $group_stmt->execute([$students, $project_id]);
     }
     public function create_student($name) {
         $sql = "INSERT INTO students(full_name) VALUES (?)";

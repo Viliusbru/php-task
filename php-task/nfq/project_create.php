@@ -18,14 +18,12 @@
         $group_number = $_POST['group-number'];
         $students = $_POST['student-number'];
         $total_groups = $group_number*$students;
-        $group_id_counter = 1;
         $submit = new Dbquerys();
         $submit->create_project($name, $group_number, $students);
         for($g=1; $g<=$group_number; $g++){
             for($i = 1; $i <= $students; $i++) {
-                $submit->create_group($name, $students, $group_id_counter);
+                $submit->create_group($name, $students);
             }
-            $group_id_counter++;
         }
         header('Location: index.php');
     }
