@@ -17,7 +17,7 @@
         $name = $_POST['student-name'];
 
         $submit = new Dbquerys();
-        $submit->create_student($name);
+        $submit->createStudent($name);
     }
 ?>
 <form style="width:20%;padding:10px;margin:10px;" class="border rounded" method="POST">

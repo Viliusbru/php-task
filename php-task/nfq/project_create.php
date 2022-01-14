@@ -19,10 +19,9 @@
         $students = $_POST['student-number'];
         $total_groups = $group_number*$students;
         $submit = new Dbquerys();
-        $submit->create_project($name, $group_number, $students);
+        $submit->createProject($name, $group_number, $students);
         for($g=1; $g<=$group_number; $g++){
-            $submit->create_group($name, $students);
-            
+            $submit->createGroup($name, $students);  
         }
         header('Location: index.php');
     }

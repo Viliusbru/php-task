@@ -21,7 +21,7 @@
         
         <?php 
         $students = new Dbquerys();
-        $group = $students->get_group_for_student();
+        $group = $students->getGroupForStudent();
         foreach($group as $student): ?>
         <div class="card d-flex flex-column gap-3">
             <div class="card-body d-flex flex-column gap-1">

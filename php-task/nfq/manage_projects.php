@@ -13,9 +13,9 @@
 <?php include('templates/navbar.php'); ?> 
 <?php include 'script/db.php'; ?> 
 <?php
+
     $projects = new Dbquerys();
     $projects = $projects->getAllFromTable("projects");
-
 
 ?>
     <div class="container">
@@ -25,7 +25,7 @@
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $project['project_name'] ?></h5>
                         <p class="card-text">Number of groups: <?php echo $project['number_of_groups'] ?></p>
-                        <a href="create_project.php?id=<?php echo $project['id']?>" class="btn btn-primary">Edit project</a><p></p>
+                        <a href="edit_project.php?id=<?php echo $project['id']?>" class="btn btn-primary">Edit project</a><p></p>
                         <a href="script/delete_project.php?id=<?php echo $project['id']?>" class="btn btn-danger btn-primary">Delete project</a><p></p>
                     </div>
                 </div>  
